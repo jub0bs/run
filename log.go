@@ -228,10 +228,7 @@ func extractTraceID(v interface{}) string {
 	switch t := v.(type) {
 	case *http.Request:
 		traceHeader := t.Header.Get("X-Cloud-Trace-Context")
-		ts := strings.Split(traceHeader, "/")
-		if len(ts) > 0 && len(ts[0]) > 0 {
-			trace = ts[0]
-		}
+		trace, _, _ = strings.Cut(traceHeader, "/")
 	default:
 		trace = ""
 	}
